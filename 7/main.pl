@@ -43,7 +43,14 @@ sub find_bag_in_bags {
   return @list_of_containers;
 }
 
-sub solve_file {
+sub sum_children {
+  my ($bag, @bags) = @_;
+  my %dict = map {$_->[0] => $_->[1]} @bags;
+  say for keys %dict;
+  say for values %dict;
+}
+
+sub solve_file_1 {
   my $file = shift;
   say "Solving file $file";
   open my $FH, "<", $file or die $!;
@@ -60,6 +67,27 @@ sub solve_file {
     @containers = @new_containers;
   }
   say scalar @containers;
+}
+
+sub count_r {
+  my ($bag, %bags) = @_;
+}
+
+sub solve_file {
+  my $file = shift;
+  say "Solving file $file";
+  open my $FH, "<", $file or die $!;
+  my @lines = <$FH>;
+  close $FH;
+
+  my @bags = map {line_to_dict($_)} (@lines);
+
+  my %dict = map { shift(@$_) => $_ } @bags;
+
+  my $nbags = 1;
+  my $bag = "shiny gold";
+  my $ref = $dict{$bag};
+  say "@$_" for @$ref;
 }
 
 solve_file($_) for (@ARGV);
